@@ -1,0 +1,8 @@
+{
+  "name": "research",
+  "description": "Research-grade workflows for Sidd. Six composable model-invoked skills: ai-analysis (parity-enforcing AI comparisons with full raw-call logging), citation-check (existence + metadata + claim grounding), paper-summarizer (line-by-line grounded summaries of single papers), replication-pack (deterministic bundles of completed experiments), lit-review (multi-source verified literature search), and pre-submission-check (orchestrating final-pass audit before submission).",
+  "author": {
+    "name": "Sidd Vohra",
+    "email": "siddvoh@gmail.com"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "sidds-claude-plugins",
+  "description": "Sidd's personal Claude Code marketplace: handcrafted plugins, productivity tools, and curated extensions.",
+  "owner": {
+    "name": "Sidd Vohra",
+    "email": "siddvoh@gmail.com",
+    "url": "https://github.com/siddvoh"
+  },
+  "plugins": [
+    {
+      "name": "research",
+      "description": "Research-grade workflows. Six composable skills: ai-analysis (parity-enforcing AI comparisons with raw-call logging), citation-check (existence + metadata + line-by-line claim grounding), paper-summarizer (grounded structured summaries), replication-pack (deterministic experiment bundles), lit-review (multi-source verified search), pre-submission-check (final-pass audit).",
+      "author": {
+        "name": "Sidd Vohra",
+        "email": "siddvoh@gmail.com"
+      },
+      "source": "./plugins/research",
+      "category": "research",
+      "homepage": "https://github.com/siddvoh/sidds-claude-plugins/tree/main/plugins/research"
+    }
+  ]
+}
