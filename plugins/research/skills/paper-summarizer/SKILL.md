@@ -114,3 +114,5 @@ If you make any LLM API calls during this skill (e.g. asking another model to ex
 - `Write` — to save the summary to disk so it's reusable downstream.
 
 Save every summary to disk by default. Pick a sensible location (honor any existing `summaries/` or similar directory in the project; otherwise default to a `summaries/` directory next to wherever the user keeps research notes). Tell the user the chosen path. Downstream skills (`lit-review`, `pre-submission-check`) search for summaries by file format (markdown with the schema above), not by path.
+
+**Auto-gitignore the output location** before writing the first summary, per the canonical rule in `ai-analysis` SKILL.md § Auto-gitignore. Summaries can quote unpublished/paywalled material verbatim, so they should not be committed by accident.

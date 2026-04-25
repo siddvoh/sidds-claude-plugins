@@ -107,6 +107,26 @@ Pick a location once per run and stick with it. Order of preference:
 
 Tell the user the chosen location at the start of the run. The consuming skills (`replication-pack`, `pre-submission-check`) search by file format — they don't depend on a specific path, so any sensible directory works.
 
+### Auto-gitignore (mandatory before first write)
+
+After picking a location and BEFORE writing the first file, ensure the location is gitignored. This is the canonical rule referenced by every other skill in this plugin.
+
+Procedure:
+
+1. **Determine the git repo root.** Walk up from the chosen path looking for a `.git/` directory. If no ancestor has one, the chosen location isn't inside a git repo — skip auto-gitignore silently. (Without git, there's no commit risk.)
+2. **Check whether the location is already ignored.** Use `Bash` `git -C <repo-root> check-ignore -v <path>`. If exit code 0, it's already covered by some rule (could be `.gitignore`, `.git/info/exclude`, or a parent rule) — nothing to do.
+3. **If a negation rule un-ignores it** (a `!path` line in any `.gitignore`), STOP and ask the user. They explicitly opted in to tracking; don't silently override.
+4. **Otherwise, add it.** Append a line to the nearest applicable `.gitignore`:
+   - Prefer the repo root's `.gitignore` (create it if missing).
+   - The added line is the path relative to the `.gitignore` it's written into.
+   - Add a trailing slash if the path is a directory (e.g. `.research/`).
+   - Above the new line, add a one-line comment naming the producing skill: `# added by research/<skill-name>`.
+5. **Tell the user** explicitly: *"Added `<path>` to `<.gitignore-location>` so the logs aren't committed by accident."*
+
+Apply this rule to every output of the skill: the raw-calls directory, the `_index.json`, the cost log, and any other artifact written. If multiple paths share a common parent, gitignore the parent once.
+
+If the user ever wants to share an artifact (e.g. publish a replication pack), they can `git add -f` it explicitly — the gitignore rule won't block that, it just prevents accidental commits.
+
 ### What to save
 
 For every call, write a JSON file with a unique name (e.g. `<NNNN>-<provider>-<model>.json` where `NNNN` is a zero-padded sequence number per run). The file must contain:
@@ -159,9 +179,9 @@ For every call, write a JSON file with a unique name (e.g. `<NNNN>-<provider>-<m
 
 After each run, also write `_index.json` (in the same directory as the per-call files) listing every call file, in order, with: call_index, provider, model_id, total tokens, total cost, wall_ms. Consuming skills read this first when they find it; if it's missing, they regenerate it from the per-call files.
 
-### Privacy
+### Sensitive content
 
-The raw calls contain user prompts. If the prompts include anything sensitive (PII, proprietary text, unpublished research), tell the user before logging and let them choose: (a) log anyway and `.gitignore` the chosen directory, (b) log with a content-hash placeholder instead of the actual prompt body. Whichever directory you picked above, make sure it's gitignored in the user's research repo before any sensitive call is written.
+Auto-gitignore (above) handles "don't commit this by accident". For genuinely sensitive content (PII, proprietary text, unpublished research) the user may want stronger handling. Before the first sensitive call, ask: log the prompt verbatim (default, gitignored), or log with a content-hash placeholder instead of the prompt body? Hashing reduces replication fidelity but eliminates the leak surface.
 
 ## Cost logging (after each run)
 

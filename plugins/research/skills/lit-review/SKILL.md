@@ -41,6 +41,8 @@ For each source, run at least two queries:
 
 Save raw query results as JSON, one file per (source, query) pair, named with a hash of the query so re-running is idempotent. Put them in a `lit-review/<topic-slug>/raw/` directory, parented under whatever location the project uses for research data (honor an existing convention, else default to a `.research/` or `research/` directory at the project root). Tell the user the chosen path.
 
+**Auto-gitignore the chosen output directory** before writing the first file, per the canonical rule in `ai-analysis` SKILL.md § Auto-gitignore.
+
 ### Step 3 — Deduplicate and merge
 
 Merge results across sources using this priority order for matching:

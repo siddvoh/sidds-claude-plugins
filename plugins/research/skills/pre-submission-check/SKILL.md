@@ -92,6 +92,8 @@ If no venue is specified, SKIP this section with a note.
 
 Produce a single markdown report `<manuscript-name>-pre-submission-<date>.md` next to the manuscript itself, or in whatever output directory the project uses. Tell the user the chosen path.
 
+**Auto-gitignore the report's parent directory** before writing, per the canonical rule in `ai-analysis` SKILL.md § Auto-gitignore. The report quotes manuscript content and may contain unpublished material.
+
 ```markdown
 # Pre-submission check: <manuscript title>
 

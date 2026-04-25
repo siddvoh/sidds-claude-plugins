@@ -155,6 +155,8 @@ When zipping:
 
 Output two files: `<run-id>.zip` and `<run-id>.sha256`. Put them next to where the raw-calls came from (e.g. a sibling `replication-packs/` directory), or wherever the user specifies. Tell the user the chosen output path.
 
+**Auto-gitignore the output directory** before writing, per the canonical rule in `ai-analysis` SKILL.md § Auto-gitignore. The pack contains every prompt and response from the run; even though credentials are redacted, the content may be sensitive. If the user later wants to publish a pack as supplementary material, they can `git add -f` it explicitly.
+
 ### Step 7 — Write the README inside the bundle
 
 Brief markdown explaining: (1) what the experiment was, (2) how to read each directory, (3) how to replicate (re-run the prompts in `setup/setup.json` against the model IDs listed, with the params shown). Include a one-line warning that the model snapshots may be deprecated by the provider in the future, and that the raw-call logs in `raw_calls/` are the source of truth in that case.

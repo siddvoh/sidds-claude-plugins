@@ -113,4 +113,4 @@ The skills are **format-driven, not path-driven**. They search by the schema of 
 
 If a skill can't find data it needs, it raises an alarm with what it searched for — it does not fabricate data or assume a path silently.
 
-**Privacy note:** raw-call logs contain prompts, which may be sensitive. Whatever location the skills end up using in your research repo, gitignore it before any sensitive call is logged.
+**Auto-gitignore.** Skills automatically add their output locations to `.gitignore` before writing the first file, so prompts, responses, and other artifacts aren't committed by accident. The canonical rule lives in `skills/ai-analysis/SKILL.md` § Auto-gitignore; every other skill references it. If you ever want to deliberately commit an artifact (e.g. publish a replication pack), use `git add -f`.
